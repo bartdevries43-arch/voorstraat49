@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Voorstraat 49 Verbouwplan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: bouwtekening op papier. Smalle leeskolom, plattegronden en begroting op volle breedte, sticky sectie-navigatie. */
+:root{
+  --paper:#F2F2EC; --card:#FAFAF6; --ink:#1C2521; --muted:#5B675F; --line:#D3D5CA;
+  --door:#1F4A3A; --door-soft:#DCE8E0; --brick:#A2472E; --glass:#B98A1F;
+  --r-live:#EBDFC8; --r-sleep:#E7D3C6; --r-wet:#CFDFE2; --r-circ:#E9E3CF; --r-out:#DCE4D3; --r-new:#C9E2D4; --r-wall:#2A332E;
+  --f-display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --s-1:.8125rem; --s0:1.0625rem; --s1:1.25rem; --s2:1.6rem; --s3:2.2rem; --s4:3.4rem;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#131916; --card:#1A221E; --ink:#E6E9E2; --muted:#9BA69F; --line:#2C3631;
+  --door:#79BC9C; --door-soft:#1F3229; --brick:#DD7D5E; --glass:#E2B955;
+  --r-live:#3A3326; --r-sleep:#3C2E29; --r-wet:#23363A; --r-circ:#302E24; --r-out:#24301F; --r-new:#1E3D30; --r-wall:#D7DDD6;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#131916; --card:#1A221E; --ink:#E6E9E2; --muted:#9BA69F; --line:#2C3631;
+  --door:#79BC9C; --door-soft:#1F3229; --brick:#DD7D5E; --glass:#E2B955;
+  --r-live:#3A3326; --r-sleep:#3C2E29; --r-wet:#23363A; --r-circ:#302E24; --r-out:#24301F; --r-new:#1E3D30; --r-wall:#D7DDD6;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:var(--s0);line-height:1.6;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.1;text-wrap:balance;margin:0}
+h2{font-size:var(--s3);font-weight:800;letter-spacing:-.01em}
+h3{font-size:var(--s2);font-weight:600}
+h4{font-size:var(--s-1);text-transform:uppercase;letter-spacing:.09em;font-weight:600;color:var(--muted)}
+p{margin:0;max-width:66ch}
+a{color:var(--door);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,label:focus-within{outline:2px solid var(--glass);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.06em;color:var(--brick);text-transform:uppercase}
+
+/* hero */
+.hero{padding-block:56px 32px;display:grid;gap:22px;border-bottom:2px solid var(--ink)}
+.hero h1{font-size:clamp(2.4rem,7vw,4.6rem);font-weight:800;letter-spacing:-.025em}
+.hero h1 span{color:var(--door)}
+.lede{font-size:var(--s1);max-width:60ch}
+.facts{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--line);background:var(--card)}
+.facts div{flex:1 1 130px;padding:12px 14px;border-right:1px solid var(--line);display:grid;gap:2px}
+.facts div:last-child{border-right:0}
+.facts b{font-family:var(--f-mono);font-size:var(--s1);font-weight:600}
+.facts small{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.lbl-g{color:var(--brick)}
+
+/* nav */
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+nav.toc ul{list-style:none;margin:0 auto;max-width:1080px;padding:10px 0;display:flex;gap:18px;white-space:nowrap}
+nav.toc a{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);text-decoration:none}
+nav.toc a:hover{color:var(--door)}
+
+section{padding-block:56px 8px;display:grid;gap:22px;scroll-margin-top:48px}
+.sec-head{display:grid;gap:8px}
+
+/* verdict */
+.verdict{background:var(--door);color:var(--paper);padding:22px 24px;display:grid;gap:8px}
+.verdict p{max-width:none}
+.verdict b{font-family:var(--f-display)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .verdict{color:#0F1512}}
+:root[data-theme="dark"] .verdict{color:#0F1512}
+
+/* two column lists */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:28px}
+.cols > div{min-width:0;display:grid;gap:12px;align-content:start}
+ul.marks{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+ul.marks li{padding-left:26px;position:relative}
+ul.marks li::before{position:absolute;left:0;top:.05em;font-family:var(--f-mono);font-weight:600}
+ul.plus li::before{content:"+";color:var(--door)}
+ul.flag li::before{content:"!";color:var(--brick)}
+ul.marks b{font-family:var(--f-display);font-weight:600}
+.ph{font-family:var(--f-mono);font-size:.74rem;white-space:nowrap}
+
+/* moodboard */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sw{border:1px solid var(--line);background:var(--card);display:grid}
+.sw i{display:block;height:84px}
+.sw div{padding:10px 12px;display:grid;gap:2px}
+.sw b{font-family:var(--f-display);font-size:.98rem}
+.sw small{font-size:.82rem;color:var(--muted);line-height:1.35}
+.materials{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.materials div{background:var(--card);padding:14px 16px;display:grid;gap:4px;align-content:start}
+.materials b{font-family:var(--f-display);font-weight:600}
+.materials span{font-size:.92rem;color:var(--muted)}
+
+/* plans */
+.plan-ui{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--ink)}
+.seg button{font:600 .8rem var(--f-mono);background:transparent;color:var(--ink);border:0;padding:8px 14px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.plan-box{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px;align-items:start}
+@media (max-width:760px){.plan-box{grid-template-columns:1fr}}
+.plan-svg{background:var(--card);border:1px solid var(--line);padding:10px;overflow-x:auto}
+.plan-svg svg{display:block;width:100%;max-width:440px;height:auto;margin:0 auto}
+.plan-notes{display:grid;gap:12px;min-width:0}
+.plan-notes ol{margin:0;padding-left:1.2em;display:grid;gap:8px}
+.legend{display:flex;flex-wrap:wrap;gap:10px 16px;font-family:var(--f-mono);font-size:.74rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border:1px solid var(--line);display:inline-block}
+
+/* rooms */
+.room{border-top:1px solid var(--ink);padding-top:18px;display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:24px}
+@media (max-width:760px){.room{grid-template-columns:1fr;gap:12px}}
+.room-id{display:grid;gap:6px;align-content:start}
+.room-id .m2{font-family:var(--f-mono);font-size:.82rem;color:var(--muted)}
+.room-body{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px 28px}
+.room-body > div{display:grid;gap:6px;align-content:start;min-width:0}
+.room-body p{font-size:.98rem}
+.wow{grid-column:1/-1;border-left:3px solid var(--glass);padding:4px 0 4px 14px}
+.wow h4{color:var(--glass)}
+.planb{background:var(--card);border:1px dashed var(--muted);padding:16px 18px;display:grid;gap:6px}
+
+/* tech */
+.tech{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.tech div{background:var(--card);padding:16px 18px;display:grid;gap:6px;align-content:start}
+.tech b{font-family:var(--f-display);font-weight:600;font-size:1.05rem}
+.tech p{font-size:.95rem}
+.tag{font-family:var(--f-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;padding:2px 6px;border:1px solid currentColor;justify-self:start}
+.tag.must{color:var(--brick)} .tag.smart{color:var(--door)}
+
+/* budget */
+.budget{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:860px){.budget{grid-template-columns:1fr}}
+.b-controls{display:grid;gap:14px}
+.b-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.b-row > span{font-family:var(--f-mono);font-size:.76rem;color:var(--muted);min-width:80px}
+.b-list{border:1px solid var(--line);background:var(--card)}
+.b-group{font-family:var(--f-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:12px 14px 6px;border-top:1px solid var(--line)}
+.b-group:first-child{border-top:0}
+.b-item{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:7px 14px;cursor:pointer}
+.b-item:hover{background:var(--door-soft)}
+.b-item input{accent-color:var(--door);margin:0;transform:translateY(2px)}
+.b-item span{font-size:.94rem;line-height:1.35}
+.b-item em{font-family:var(--f-mono);font-style:normal;font-size:.82rem;font-variant-numeric:tabular-nums;color:var(--muted)}
+.b-item.on em{color:var(--ink)}
+.b-sum{position:sticky;top:60px;border:2px solid var(--ink);background:var(--card);padding:18px;display:grid;gap:12px}
+.b-sum dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-family:var(--f-mono);font-size:.86rem;font-variant-numeric:tabular-nums}
+.b-sum dt{color:var(--muted)} .b-sum dd{margin:0;text-align:right}
+.b-sum .big{font-family:var(--f-display);font-size:var(--s3);font-weight:800;color:var(--door);line-height:1}
+.b-sum .total{border-top:1px solid var(--ink);padding-top:8px;color:var(--ink);font-weight:600}
+.b-sum label{font-family:var(--f-mono);font-size:.76rem;color:var(--muted);display:grid;gap:4px}
+.b-sum input[type=number]{font:600 1rem var(--f-mono);padding:6px 8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);width:100%}
+.warn{border-left:3px solid var(--brick);padding:6px 0 6px 12px;font-size:.92rem}
+.warn b{color:var(--brick);font-family:var(--f-display)}
+
+/* timeline */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:s}
+.steps li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:18px;padding:14px 0;border-top:1px solid var(--line)}
+@media (max-width:560px){.steps li{grid-template-columns:1fr;gap:4px}}
+.steps .when{font-family:var(--f-mono);font-size:.8rem;color:var(--brick);padding-top:3px}
+.steps b{font-family:var(--f-display);font-weight:600}
+
+/* checklist */
+.check{display:grid;gap:2px;border:1px solid var(--line);background:var(--card)}
+.check label{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;padding:10px 14px;cursor:pointer;align-items:start}
+.check label:hover{background:var(--door-soft)}
+.check input{accent-color:var(--door);margin-top:.35em}
+.check input:checked + span{color:var(--muted);text-decoration:line-through}
+.check span b{font-family:var(--f-display);font-weight:600}
+.foot{font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:40px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<div class="wrap">
+<header class="hero">
+  <div class="eyebrow">Verbouw- en stylingplan · Vlaardingen Ambacht · bouwjaar 1930</div>
+  <h1>Voorstraat 49:<br>van roze tapijt naar <span>jaren '30 met lucht</span></h1>
+  <p class="lede">Dit huis heeft alles wat je niet kunt kopen (ligging, erker, glas-in-lood, een diepe tuin) en alles wat je wel kunt laten maken. Hieronder kijk ik er doorheen als aannemer, interieurontwerper en stylist: wat er moet gebeuren, hoe het eruit komt te zien en wat het ongeveer kost.</p>
+  <div class="facts">
+    <div><small>Vraagprijs</small><b>€ 400.000</b></div>
+    <div><small>Wonen</small><b>121 m²</b></div>
+    <div><small>Perceel</small><b>190 m²</b></div>
+    <div><small>Achtertuin</small><b>14,5 × 6,1 m</b></div>
+    <div><small>Energielabel</small><b class="lbl-g">G</b></div>
+    <div><small>Verwarming</small><b>gashaard + geiser</b></div>
+  </div>
+</header>
+</div>
+
+<nav class="toc" aria-label="Secties">
+  <ul>
+    <li><a href="index.html">3D-model</a></li>
+    <li><a href="#oordeel">Oordeel</a></li>
+    <li><a href="#concept">Stijl</a></li>
+    <li><a href="#plattegrond">Plattegrond</a></li>
+    <li><a href="#ruimtes">Ruimte voor ruimte</a></li>
+    <li><a href="#techniek">Techniek</a></li>
+    <li><a href="#begroting">Begroting</a></li>
+    <li><a href="#planning">Planning</a></li>
+    <li><a href="#bezichtiging">Bezichtiging</a></li>
+  </ul>
+</nav>
+
+<main class="wrap">
+
+<section id="oordeel">
+  <div class="sec-head">
+    <div class="eyebrow">De aannemersblik</div>
+    <h2>Wat ik zie als ik door de foto's loop</h2>
+  </div>
+  <div class="verdict">
+    <b>Kort oordeel:</b>
+    <p>Dit is een klassiek "alles eruit"-huis: niets is kapot op een manier die je niet kunt oplossen, maar je koopt een casco met karakter. Reken op een volledige renovatie (elektra, leidingen, isolatie, verwarming, keuken, badkamer, afwerking). De grote onbekende is de fundering: in Vlaardingen bij een huis uit 1930 is dat dé vraag die je beantwoord wilt hebben vóór je biedt.</p>
+  </div>
+  <div class="cols">
+    <div>
+      <h4>Wat goed is (en blijft)</h4>
+      <ul class="marks plus">
+        <li><b>Erker met glas-in-lood bovenlichten.</b> Het visitekaartje van het huis. Restaureren, niet vervangen. <a class="ph" href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/13">foto 13</a></li>
+        <li><b>Marmeren schouw in de middenkamer.</b> Waarschijnlijk origineel rood-wit marmer. Gashaard eruit, schouw blijft: dat is precies het detail waar stylisten naar zoeken. <a class="ph" href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/17">foto 17</a></li>
+        <li><b>Kamer-en-suite indeling.</b> De oude en-suite opening is dichtgezet met plaatmateriaal en dus makkelijk weer open te maken. <a class="ph" href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/19">foto 19</a></li>
+        <li><b>Originele paneeldeuren met glas</b> boven, plafondlijsten en een rozet in de voorkamer. <a class="ph" href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/33">foto 33</a></li>
+        <li><b>Diepe tuin met achterom en een stevige schuur</b> van 5,40 × 2,45 m. Perfect voor een tuinkamer. <a class="ph" href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/27">foto 27</a></li>
+        <li><b>De buren rechts hebben al een complete opbouw.</b> Een sterke aanwijzing dat een dakkapel of extra laag hier bespreekbaar is. <a class="ph" href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/2">foto 2</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Waar ik op let</h4>
+      <ul class="marks flag">
+        <li><b>Scheuren in de achterslaapkamer</b> rond beide deurkozijnen. Kan oud stucwerk zijn, kan ook zetting zijn. Laten beoordelen. <a class="ph" href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/33">foto 33</a></li>
+        <li><b>Vochtvlekken en loslatend behang</b> rond raam en schoorsteen in de voorslaapkamer, plus een vlek op de vloer van het kleine kamertje. Wijst op lekkage bij schoorsteen of dak. <a class="ph" href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/36">foto 36</a></li>
+        <li><b>Geiser in de badkamer en gaskachels</b> in meerdere kamers. Alles moet eruit, ook om veiligheidsredenen. <a class="ph" href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/42">foto 42</a></li>
+        <li><b>Oude elektra en opbouwleidingen</b> in de keuken, plus een scheur boven het aanrecht. <a class="ph" href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/29">foto 29</a></li>
+        <li><b>Asbestverdenking</b> is normaal bij een huis met jaren '60/'70 aanpassingen: serre- en schuurdak, vinyl vloerzeil, platen achter kachels.</li>
+        <li><b>Geen toilet boven.</b> Funda noemt 1 badkamer en 1 apart toilet (beneden). Met kinderen wil je dat boven oplossen.</li>
+        <li><b>As-is clausule en "niet zelf bewoond".</b> De verkoper staat nergens voor in. Een bouwkundige keuring is dus geen luxe.</li>
+        <li><b>Tuinligging klopt niet in de advertentie:</b> er staat zuiden, zuidoosten én noordoosten. Check het met een kompas-app.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="concept">
+  <div class="sec-head">
+    <div class="eyebrow">Stijlrichting</div>
+    <h2>"Warm jaren '30": karakter houden, rust toevoegen</h2>
+  </div>
+  <p>De fout die ik bij dit soort huizen het vaakst zie: alles wit en strak maken tot het een nieuwbouwwoning met een erker is. De stijl van vtwonen en Kopen Zonder Kijken in 2026 gaat de andere kant op. Warme kalkwitten in plaats van koel wit, veel hout, kleur in blokken (halfhoge lambrisering, een geschilderde trap), maatwerk dat in de architectuur opgaat, en een paar originele details die je bewust uitlicht. De groene voordeur geeft de kleur al aan: we nemen dat groen mee naar binnen.</p>
+  <div class="swatches">
+    <div class="sw"><i style="background:#EEE8DC"></i><div><b>Kalkwit</b><small>Basis voor plafonds en de meeste wanden. Warm, nooit koel wit.</small></div></div>
+    <div class="sw"><i style="background:#D6C7AE"></i><div><b>Zandsteen</b><small>Voorkamer en slaapkamers. Matte kalkverf geeft diepte.</small></div></div>
+    <div class="sw"><i style="background:#8C8C69"></i><div><b>Olijf</b><small>Keukenfronten, lambrisering in hal en overloop.</small></div></div>
+    <div class="sw"><i style="background:#1F3D32"></i><div><b>Flessengroen</b><small>Voordeur, trap, één accentwand achter het bed.</small></div></div>
+    <div class="sw"><i style="background:#9A4F33"></i><div><b>Roestbruin</b><small>Toilettegels, textiel, een fauteuil. Knipoog naar de baksteen.</small></div></div>
+    <div class="sw"><i style="background:#B8925F"></i><div><b>Eiken naturel</b><small>Visgraatvloer beneden, maatwerk, eettafel.</small></div></div>
+    <div class="sw"><i style="background:#5E2027"></i><div><b>Bordeaux</b><small>Spaarzaam: een lampenkap, kussens, kunst. Dé accentkleur van nu.</small></div></div>
+  </div>
+  <div class="materials">
+    <div><b>Vloer</b><span>Eiken visgraat beneden (vloerverwarming-geschikt, gelijmd). Boven brede eiken planken.</span></div>
+    <div><b>Glas</b><span>Stalen (of staal-look) deuren met roedeverdeling, ribbelglas in binnenramen, glas-in-lood gerestaureerd.</span></div>
+    <div><b>Wanden</b><span>Kalkverf, halfhoge lambrisering met een simpel lijstje, zellige-tegels in keuken en toilet.</span></div>
+    <div><b>Steen</b><span>Marmeren schouw behouden, werkblad in natuursteen of keramiek, terrazzo in de badkamer.</span></div>
+    <div><b>Metaal</b><span>Geborsteld messing voor kranen en grepen, zwart voor stalen deuren en lampen.</span></div>
+    <div><b>Textiel</b><span>Linnen gordijnen van plafond tot vloer, wol en ribcord op de bank. Bouclé is voorbij.</span></div>
+  </div>
+</section>
+
+<section id="plattegrond">
+  <div class="sec-head">
+    <div class="eyebrow">Indeling op schaal</div>
+    <h2>Plattegrond nu en straks</h2>
+  </div>
+  <div class="plan-ui">
+    <div class="seg" role="group" aria-label="Verdieping">
+      <button id="fl-bg" aria-pressed="true">Begane grond</button>
+      <button id="fl-1" aria-pressed="false">1e verdieping</button>
+    </div>
+    <div class="seg" role="group" aria-label="Situatie">
+      <button id="st-nu" aria-pressed="false">Nu</button>
+      <button id="st-straks" aria-pressed="true">Straks</button>
+    </div>
+  </div>
+  <div class="plan-box">
+    <div class="plan-svg" id="plan"></div>
+    <div class="plan-notes" id="plan-notes"></div>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--r-live)"></i>wonen</span>
+    <span><i style="background:var(--r-sleep)"></i>slapen</span>
+    <span><i style="background:var(--r-wet)"></i>keuken / sanitair</span>
+    <span><i style="background:var(--r-circ)"></i>hal / overloop</span>
+    <span><i style="background:var(--r-new)"></i>nieuw gebouwd</span>
+    <span><i style="background:var(--r-out)"></i>buiten</span>
+  </div>
+  <p style="font-size:.88rem;color:var(--muted)">Getekend op basis van de maten van de Funda-plattegrond (straatzijde onder). Afwijkingen van enkele centimeters zijn mogelijk; voor de echte uitbouw maakt een tekenaar een maatvoering op locatie.</p>
+</section>
+
+<section id="ruimtes">
+  <div class="sec-head">
+    <div class="eyebrow">Ruimte voor ruimte</div>
+    <h2>Wat we bouwen, en hoe we het inrichten</h2>
+  </div>
+
+  <article class="room">
+    <div class="room-id"><h3>Voorgevel en voortuin</h3><span class="m2">voortuin ca. 24 m² · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/5">foto 5</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/8">8</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/9">9</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Gevel reinigen en voegwerk nalopen. De luifel boven de erker is een origineel detail: herstellen en schilderen. Bovenlicht en smal zijraam bij de voordeur behouden. Voordeur hooguit opnieuw lakken: dat groen is precies goed.</p></div>
+      <div><h4>Styling</h4><p>Houten planken op het muurtje vervangen door een laag zwart smeedijzeren hekje. Klinkerpad, een meerstammige krentenboom of Japanse esdoorn, hortensia's langs het muurtje. Messing huisnummer, brievenbus en een bolvormige gevellamp.</p></div>
+      <div class="wow"><h4>Wow-moment</h4><p>'s Avonds de erker verlicht met een paar lampjes in de vensterbank, het glas-in-lood gloeit naar de straat. Dat is je Funda-foto als je ooit verkoopt.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Entree en hal</h3><span class="m2">ca. 2,0 × 7,5 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/10">foto 10</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/31">31</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Schrootjes en blauwe lambrisering eruit, plafond strak. Trap ontdoen van verf en vloerbedekking, treden schuren. Nieuwe meterkast (3-fase, voor warmtepomp en inductie). Het smalle raampje tussen hal en kamer krijgt ribbelglas, zodat er daglicht in de lange hal valt.</p></div>
+      <div><h4>Styling</h4><p>Halfhoge lambrisering terug, maar strak: olijfgroen tot 1,20 m, kalkwit erboven. De trap in dezelfde groene tint geverfd, met een naturel loper. In de entree een schoonloopzone van cementtegels of terrazzo die overgaat in eiken. Trapkast wordt garderobe met eiken haken en een bankje.</p></div>
+      <div class="wow"><h4>Wow-moment</h4><p>Kleur-op-kleur: wand en trap in hetzelfde groen. Het eerste wat je ziet als de deur opengaat.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Toilet beneden</h3><span class="m2">ca. 0,8 × 1,2 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/31">foto 31</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Volledig strippen. Zwevend toilet met inbouwreservoir, klein fonteintje, nieuwe afvoer en mechanische afzuiging.</p></div>
+      <div><h4>Styling</h4><p>Tegels tot het plafond, glanzend en een beetje onregelmatig (zellige-look) in roestbruin. Messing kraantje, kleine ronde spiegel, één wandlampje. Kleine ruimte, groot gebaar.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Voorkamer met erker</h3><span class="m2">3,80 × 4,50 m + erker · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/12">foto 12</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/13">13</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Tapijt eruit (benieuwd wat eronder zit). De jaren '70 schouw met stenen haard slopen, schoorsteenkanaal afdichten en de borstwering strak stucen. Glas-in-lood laten restaureren en aan de binnenkant voorzien van isolerend voorzetglas. Plafondlijsten en rozet herstellen en meeschilderen.</p></div>
+      <div><h4>Styling</h4><p>De rustige kamer: zitkamer, bibliotheek, plek voor de tv. Maatwerk vensterbank in de erker met kussens en laden eronder (vervangt de oude kastjes). Boekenkasten in de nissen naast de schoorsteen. Wanden in zandsteen kalkverf, linnen gordijnen tot het plafond. Een diepe bank in ribcord of wol, een ronde salontafel in travertin, vintage wandlampen.</p></div>
+      <div class="wow"><h4>Wow-moment</h4><p>De erkerbank. Kopen Zonder Kijken bouwt dit in bijna elke jaren '30 woning, en terecht: het is de favoriete plek van iedereen in huis.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Middenkamer wordt eetkamer</h3><span class="m2">3,80 × 4,08 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/17">foto 17</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/19">19</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Gashaard verwijderen, marmeren schouw laten reinigen en polijsten. De dichtgezette en-suite opening slopen en voorzien van stalen deuren met helder glas en een roedeverdeling die bij de jaren '30 past (taats- of schuifdeuren, zodat ze open kunnen staan). De achtergevel gaat grotendeels open naar de nieuwe keuken, met een stalen balk.</p></div>
+      <div><h4>Styling</h4><p>Ovale of ronde eiken eettafel voor zes, gemixte stoelen, een grote lamp laag boven tafel (papier, rotan of een glazen bol). De schouw wordt het dressoir: kunst erop, kaarsen, een vaas met takken. Wanden kalkwit zodat het marmer spreekt.</p></div>
+      <div class="wow"><h4>Wow-moment</h4><p>Door de stalen deuren kijk je van de erker helemaal door tot de appelboom achterin de tuin: ruim 25 meter zichtlijn in een rijtjeshuis.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Leefkeuken in de uitbouw</h3><span class="m2">ca. 5,8 × 3,3 m nieuw · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/21">foto 21</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/29">29</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Serre (hout en kunststof plaat) en het keukentje van 5 m² slopen. Nieuwe uitbouw van ca. 3,3 m diep over de volle breedte, met fundering afgestemd op het funderingsonderzoek. Lichtstraat langs de oude gevel zodat de eetkamer niet donker wordt. Achterzijde een stalen of houten pui met brede schuif- of openslaande deuren. Vloerverwarming. Een uitbouw tot 4 m vanaf de oorspronkelijke achtergevel is vaak vergunningvrij; check dit vooraf via het Omgevingsloket.</p></div>
+      <div><h4>Styling</h4><p>Hoge kastenwand tegen de linkerwand met koelkast, oven en voorraad. Kookeiland van ca. 2,6 m met zitplek naar de tuin. Fronten in olijf of eikenfineer met ribbel, werkblad in natuursteen of keramiek, achterwand in zellige. Open eiken plank, twee hanglampen boven het eiland. Grote keramische tegels die buiten op het terras doorlopen, of de visgraat doortrekken.</p></div>
+      <div class="wow"><h4>Wow-moment</h4><p>Staand aan het eiland kijk je de tuin in, licht van boven door de lichtstraat. Dit is het moment waarop deelnemers in Kopen Zonder Kijken beginnen te huilen.</p></div>
+    </div>
+  </article>
+  <div class="planb">
+    <h4>Plan B: zonder uitbouw (scheelt € 40.000 tot € 60.000)</h4>
+    <p>Serre slopen en de achtergevel van de middenkamer voorzien van een nieuwe pui met openslaande deuren. De keuken komt dan als één wand met eiland in de middenkamer, de eettafel schuift richting de stalen deuren. Het oude keukentje wordt bijkeuken met wasmachine en voorraad. Minder spectaculair, maar slim, en de uitbouw kan altijd later nog.</p>
+  </div>
+
+  <article class="room">
+    <div class="room-id"><h3>Overloop</h3><span class="m2">ca. 2,0 × 3,5 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/40">foto 40</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Strak maken, nieuwe vlizotrap naar de zolder. De vaste kast wordt technische ruimte met wasmachine en droger op een verhoging, met afvoer en ventilatie.</p></div>
+      <div><h4>Styling</h4><p>De olijfgroene lambrisering en de geschilderde trap lopen door vanaf de hal. Een smalle loper, één goede plafondlamp, een fotowand.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Master bedroom (achter)</h3><span class="m2">3,84 × 3,81 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/32">foto 32</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/33">33</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Wastafel eruit, scheuren eerst laten beoordelen en dan herstellen. Originele paneeldeuren behouden en lakken. Twee van de drie kasten tussen de slaapkamers worden aan deze kant één doorlopende kastenwand.</p></div>
+      <div><h4>Styling</h4><p>Rustig: kalkwit met één wand achter het bed in flessengroen, of een eiken ribbelpaneel. Houten bed met hoog hoofdbord, linnen beddengoed in zand en roest, wandlampen met schakelaar naast het bed, verduisterende linnen gordijnen. Uitzicht over de tuinen.</p></div>
+      <div class="wow"><h4>Wow-moment</h4><p>Kastdeuren zonder grepen in exact de wandkleur geschilderd: de kastenwand verdwijnt en de kamer voelt groter.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Voorslaapkamer</h3><span class="m2">3,84 × 3,77 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/36">foto 36</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/38">38</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Kachel eruit, oorzaak van de vochtplekken bij schoorsteen en raam oplossen (vaak loodslabbe of voegwerk van de schoorsteen op het dak). Schoorsteenkanaal binnen eventueel weghalen voor extra ruimte. Wanden stucen.</p></div>
+      <div><h4>Styling</h4><p>Kinderkamer of logeerkamer. Halfhoge kleur in oker of terracotta met kalkwit erboven: groeit mee van baby tot puber. Maatwerk bedstee of hoogslaper tegen de kastenwand.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Kleine kamer voor</h3><span class="m2">2,02 × 2,50 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/34">foto 34</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Vlek op de vloer verklaren (lekkage of oud huisdier). Nieuwe vloer, stucwerk.</p></div>
+      <div><h4>Styling</h4><p>Werkkamer met een maatwerk bureau over de volle breedte onder het raam en planken erboven. Later babykamer of inloopkast.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Badkamer</h3><span class="m2">1,70 × 2,51 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/41">foto 41</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/42">42</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Alles eruit, geiser weg. Bad maakt plaats voor een inloopdouche met glazen wand en een nis, plus een zwevend toilet (dan heb je boven eindelijk een wc). Compact badmeubel. Nieuwe afvoeren, waterdichte afwerking, afzuiging. De deur naar het balkon blijft.</p></div>
+      <div><h4>Styling</h4><p>Terrazzo of grote keramische tegel op de vloer. Wanden halfhoog betegeld met smalle tegels, verticaal gestapeld, en kalkstuc of tadelakt erboven. Eiken badmeubel, geborsteld messing kranen, een ronde spiegel met verlichting.</p></div>
+      <div class="wow"><h4>Wow-moment</h4><p>Douchen met de balkondeur op een kier en uitzicht over de tuinen.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Balkon</h3><span class="m2">ca. 1,7 × 1,4 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/43">foto 43</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Dakbedekking en afvoer controleren (het ligt deels boven de keuken). Muurtje afdekken met een nieuwe zinken of natuurstenen deksteen.</p></div>
+      <div><h4>Styling</h4><p>Houten vlonder, plantenbakken op het muurtje, een klein bistrosetje voor de ochtendkoffie.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Achtertuin</h3><span class="m2">14,5 × 6,1 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/24">foto 24</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/25">25</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Opruimen, pergola en randjes weg. Eén of twee fruitbomen houden (er hangen appels aan). Terras van ca. 4 m diep aansluitend op de uitbouw, een pad naar de schuur en het achterom, verder borders.</p></div>
+      <div><h4>Styling</h4><p>Terrastegels in dezelfde kleur als de keukenvloer, zodat binnen en buiten één ruimte lijken. Vaste plantenborders met siergrassen, salie en hortensia. Schuttingen in donker hout met klimhortensia of sterjasmijn. Een lange tafel onder de appelboom met een lichtsnoer erboven.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Schuur wordt tuinkamer</h3><span class="m2">5,40 × 2,45 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/27">foto 27</a>, <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/28">28</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Dak en wanden isoleren, nieuwe ramen en een glazen deur richting huis, stroom en internet. Eén deel blijft berging voor fietsen en tuingereedschap.</p></div>
+      <div><h4>Styling</h4><p>Thuiskantoor of hobbyruimte met een bureau voor het raam, aan de buitenkant zwart gebeitst hout en een kleine overkapping waar je onder kunt zitten.</p></div>
+    </div>
+  </article>
+
+  <article class="room">
+    <div class="room-id"><h3>Zolder (fase 2)</h3><span class="m2">zadeldak · niet op de plattegrond</span></div>
+    <div class="room-body">
+      <div><h4>Onderzoeken</h4><p>Er staan maar twee woonlagen op Funda. Kijk bij de bezichtiging of er een vliering is en hoe hoog de nok is. Een dakkapel aan de achterzijde met een vaste trap levert een vierde slaapkamer of een ruime werkplek op.</p></div>
+      <div><h4>Waarom kansrijk</h4><p>De buren rechts hebben al een volledige opbouw. Dat zegt iets over wat de gemeente hier toestaat, al is elke aanvraag apart.</p></div>
+    </div>
+  </article>
+</section>
+
+<section id="techniek">
+  <div class="sec-head">
+    <div class="eyebrow">Het onzichtbare werk</div>
+    <h2>Techniek en verduurzaming: van G naar A</h2>
+  </div>
+  <p>Hier gaat het geld heen dat je niet ziet, maar wel elke maand voelt. De volgorde is belangrijk: eerst isoleren, dan pas elektrisch verwarmen.</p>
+  <div class="tech">
+    <div><span class="tag must">Eerst uitzoeken</span><b>Fundering</b><p>Huis uit 1930 op Vlaardingse klei en veen: houten palen of een fundering op staal. Vraag naar het funderingstype, kijk in de kruipruimte en laat bij twijfel een funderingsonderzoek doen. Herstel kan € 60.000 tot € 130.000 kosten, dus dit wil je weten vóór je biedt.</p></div>
+    <div><span class="tag must">Noodzakelijk</span><b>Elektra</b><p>Volledig nieuw: 3-fase aansluiting, nieuwe groepenkast, inbouwdozen en leidingen weggewerkt. Nodig voor inductie, warmtepomp en later een laadpaal.</p></div>
+    <div><span class="tag must">Noodzakelijk</span><b>Water en afvoer</b><p>Nieuwe waterleidingen (check op lood bij de watermeter), riolering in de kruipruimte laten inspecteren. Gas eruit bij volledig elektrisch.</p></div>
+    <div><span class="tag smart">Verduurzaming</span><b>Isolatie</b><p>Vloer via de kruipruimte, spouwmuur (als er een spouw is), dak aan de binnenkant en HR++ of triple glas in de oude kozijnen. Het glas-in-lood krijgt voorzetglas.</p></div>
+    <div><span class="tag smart">Verduurzaming</span><b>Warmtepomp</b><p>Na isolatie een lucht-water warmtepomp met vloerverwarming beneden en lage-temperatuur radiatoren boven. Boiler op zolder of in de overloopkast. Buitenunit in de tuin, uit het zicht.</p></div>
+    <div><span class="tag smart">Verduurzaming</span><b>Ventilatie en zon</b><p>Een goed geïsoleerd huis moet ventileren: CO2-gestuurde mechanische ventilatie. Op het achterdakvlak passen 8 tot 10 zonnepanelen.</p></div>
+    <div><span class="tag smart">Geld</span><b>Subsidie en financiering</b><p>Voor isolatie en warmtepomp bestaat ISDE-subsidie (check de actuele bedragen op rvo.nl). Bij een slecht energielabel mag je vaak extra lenen voor verduurzaming, en het Nationaal Warmtefonds heeft gunstige leningen. Vraag je hypotheekadviseur om dit mee te nemen in de aankoop.</p></div>
+    <div><span class="tag must">Veiligheid</span><b>Asbest</b><p>Laat een asbestinventarisatie doen vóór de sloop. Verdachte plekken: serre- en schuurdak, oud vinyl, platen achter kachels en rond de schoorsteen.</p></div>
+  </div>
+</section>
+
+<section id="begroting">
+  <div class="sec-head">
+    <div class="eyebrow">Wat kost het</div>
+    <h2>Begroting om mee te spelen</h2>
+  </div>
+  <p>Indicatieve prijzen voor 2026 in de regio Rotterdam, inclusief btw, uitgevoerd door een aannemer. Kies een scenario en vink daarna zelf posten aan of uit. "Sober" rekent met de onderkant van de bandbreedte, "Luxe" met de bovenkant.</p>
+  <div class="budget">
+    <div class="b-controls">
+      <div class="b-row"><span>Scenario</span>
+        <div class="seg" role="group" aria-label="Scenario">
+          <button id="sc-slim" data-sc="slim" aria-pressed="false">Slim &amp; netjes</button>
+          <button id="sc-vt" data-sc="vt" aria-pressed="true">vtwonen-niveau</button>
+          <button id="sc-kzk" data-sc="kzk" aria-pressed="false">KZK-droom</button>
+        </div>
+      </div>
+      <div class="b-row"><span>Afwerking</span>
+        <div class="seg" role="group" aria-label="Afwerkingsniveau">
+          <button id="lv-0" data-lv="0" aria-pressed="false">Sober</button>
+          <button id="lv-1" data-lv="1" aria-pressed="true">Middel</button>
+          <button id="lv-2" data-lv="2" aria-pressed="false">Luxe</button>
+        </div>
+      </div>
+      <div class="b-list" id="b-list"></div>
+    </div>
+    <aside class="b-sum" aria-live="polite">
+      <h4>Verbouwing totaal</h4>
+      <div class="big mono" id="b-big">€ 0</div>
+      <dl>
+        <dt>Geselecteerde posten</dt><dd id="b-sub">€ 0</dd>
+        <dt>Onvoorzien (10%)</dt><dd id="b-unf">€ 0</dd>
+        <dt class="total">Verbouwing</dt><dd class="total" id="b-tot">€ 0</dd>
+      </dl>
+      <label for="koopsom">Koopsom (pas aan na je bod)
+        <input type="number" id="koopsom" value="400000" step="5000" min="0">
+      </label>
+      <dl>
+        <dt class="total">Totale investering</dt><dd class="total" id="b-all">€ 0</dd>
+      </dl>
+      <dl>
+        <dt>Woonoppervlak na verbouwing</dt><dd id="b-m2">121 m²</dd>
+        <dt>Indicatie marktwaarde</dt><dd id="b-mw">€ 0</dd>
+      </dl>
+      <p style="font-size:.8rem;color:var(--muted)">Marktwaarde = m² × € 4.100, de gemiddelde vraagprijs per m² in Babberspolder West volgens Funda. Gerenoveerde huizen met label A zitten vaak boven dat gemiddelde, maar zit je totale investering er ver boven, dan is het tijd om te schrappen.</p>
+      <p style="font-size:.8rem;color:var(--muted)">Excl. kosten koper (overdrachtsbelasting, notaris, taxatie, advies) en dubbele woonlasten tijdens de verbouwing.</p>
+      <div class="warn"><b>Niet meegeteld:</b> eventueel funderingsherstel, € 60.000 tot € 130.000. Eerst onderzoeken.</div>
+    </aside>
+  </div>
+  <p style="font-size:.92rem;color:var(--muted)">Zelf besparen kan: sloopwerk, schilderwerk en de tuin zelf doen scheelt al snel € 10.000 tot € 20.000. Een IKEA-keukenkast met maatwerkfronten (Kopen Zonder Kijken doet dit vaak) geeft het luxe-effect voor een middenprijs.</p>
+</section>
+
+<section id="planning">
+  <div class="sec-head">
+    <div class="eyebrow">Volgorde van werken</div>
+    <h2>Planning: ongeveer vier tot vijf maanden</h2>
+  </div>
+  <ol class="steps">
+    <li><span class="when">Vóór het bod</span><div><b>Keuring en onderzoek.</b> Bouwkundige keuring, funderingsgegevens opvragen (gemeentearchief, funderingsloket), quick-scan asbest. Eén aannemer laten meelopen op een tweede bezichtiging voor een eerste prijsindicatie.</div></li>
+    <li><span class="when">Na de koop</span><div><b>Ontwerp en vergunning.</b> Tekenaar voor uitbouw en constructie, offertes bij twee of drie aannemers. Als er toch een vergunning nodig is: reken op circa 8 weken.</div></li>
+    <li><span class="when">Week 1 tot 2</span><div><b>Strippen en sloop.</b> Asbestsanering, tapijten, schrootjes, kachels, serre, keuken en badkamer eruit.</div></li>
+    <li><span class="when">Week 2 tot 6</span><div><b>Casco en uitbouw.</b> Fundering uitbouw, stalen balken, en-suite open, ruwe elektra en leidingen, vloerisolatie.</div></li>
+    <li><span class="when">Week 6 tot 10</span><div><b>Dicht en warm.</b> Uitbouw wind- en waterdicht, kozijnen en glas, dakisolatie, warmtepomp, vloerverwarming en dekvloer. De dekvloer moet weken drogen, plan dat in.</div></li>
+    <li><span class="when">Week 10 tot 14</span><div><b>Afbouw nat.</b> Stucwerk, tegelwerk, badkamer en toilet.</div></li>
+    <li><span class="when">Week 14 tot 18</span><div><b>Afbouw droog.</b> Keuken, visgraatvloer, stalen deuren, maatwerk, schilderwerk, verlichting.</div></li>
+    <li><span class="when">Daarna</span><div><b>Inrichten en tuin.</b> Gordijnen, meubels, styling. De tuin pas als de bouwrommel weg is.</div></li>
+  </ol>
+</section>
+
+<section id="bezichtiging">
+  <div class="sec-head">
+    <div class="eyebrow">Neem dit mee</div>
+    <h2>Checklist voor de bezichtiging</h2>
+  </div>
+  <p>Vink af terwijl je rondloopt. Je vinkjes blijven bewaard in deze browser.</p>
+  <div class="check" id="checklist"></div>
+</section>
+
+<p class="foot">Plan opgesteld op basis van de Funda-advertentie, 46 foto's en de plattegronden van Voorstraat 49, Vlaardingen (oktober 2026). Bedragen zijn indicatief en geen offerte; een bouwkundige keuring en offertes van aannemers op locatie zijn nodig voor echte cijfers. Tip: op Funda staat bij deze woning ook de "Virtuele Styler" om zelf met inrichting te spelen.</p>
+</main>
+
+<script>
+(function(){
+  /* ---------- plattegronden ---------- */
+  const S=46, DEPTH=12.4, PADX=34, PADY=26;
+  const fills={live:'var(--r-live)',sleep:'var(--r-sleep)',wet:'var(--r-wet)',circ:'var(--r-circ)',out:'var(--r-out)',nw:'var(--r-new)',kast:'var(--line)'};
+  const X=x=>PADX+x*S, Y=y=>PADY+(DEPTH-y)*S;
+  function rect(r){
+    const x=X(r.x), y=Y(r.y+r.h), w=r.w*S, h=r.h*S;
+    let s=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fills[r.t]}" stroke="var(--r-wall)" stroke-width="${r.thin?1:2.5}" ${r.dash?'stroke-dasharray="5 4"':''}/>`;
+    if(r.l){
+      const cx=x+w/2, cy=y+h/2, fs=r.fs||12;
+      const lines=r.l.split('|');
+      lines.forEach((ln,i)=>{s+=`<text x="${cx}" y="${cy+(i-(lines.length-1)/2)*(fs+3)+fs/3}" text-anchor="middle" font-family="Bricolage Grotesque, system-ui, sans-serif" font-size="${fs}" font-weight="${i===0?600:400}" fill="var(--ink)">${ln}</text>`});
+    }
+    return s;
+  }
+  function poly(pts,t,label,lx,ly){
+    let s=`<polygon points="${pts.map(p=>X(p[0])+','+Y(p[1])).join(' ')}" fill="${fills[t]}" stroke="var(--r-wall)" stroke-width="2.5"/>`;
+    if(label){const ls=label.split('|');ls.forEach((ln,i)=>{s+=`<text x="${X(lx)}" y="${Y(ly)+i*16}" text-anchor="middle" font-family="Bricolage Grotesque, system-ui, sans-serif" font-size="13" font-weight="${i===0?700:400}" fill="var(--ink)">${ln}</text>`});}
+    return s;
+  }
+  function stairs(x,y,w,h,n){let s='';for(let i=1;i<n;i++){const yy=y+h*i/n;s+=`<line x1="${X(x)}" x2="${X(x+w)}" y1="${Y(yy)}" y2="${Y(yy)}" stroke="var(--r-wall)" stroke-width="1"/>`;}return s+`<rect x="${X(x)}" y="${Y(y+h)}" width="${w*S}" height="${h*S}" fill="none" stroke="var(--r-wall)" stroke-width="1.5"/>`;}
+  function glassLine(x1,y1,x2,y2,label){return `<line x1="${X(x1)}" y1="${Y(y1)}" x2="${X(x2)}" y2="${Y(y2)}" stroke="var(--door)" stroke-width="5"/>`+(label?`<text x="${(X(x1)+X(x2))/2}" y="${Y(y1)-8}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--door)">${label}</text>`:'');}
+  function dim(){return `<text x="${X(0)}" y="${Y(-0.55)+18}" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--muted)">straatzijde</text><text x="${X(5.82)}" y="${Y(-0.55)+18}" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--muted)">5,82 m breed</text>`;}
+
+  const plans={
+    bg:{
+      nu:()=>[
+        rect({x:2.6,y:-0.52,w:3.22,h:0.55,t:'live'}),
+        rect({x:2.02,y:0,w:3.8,h:4.5,t:'live',l:'Woonkamer|3,80 × 4,50'}),
+        rect({x:2.02,y:4.6,w:3.8,h:4.08,t:'live',l:'Zitkamer|gashaard'}),
+        rect({x:2.02,y:8.68,w:3.8,h:3.3,t:'out',l:'Serre|hout + plaat',dash:true}),
+        rect({x:0,y:0,w:2.02,h:3.35,t:'circ',l:'Entree'}),
+        rect({x:0.75,y:3.35,w:1.27,h:4.25,t:'circ',l:'Hal',fs:11}),
+        rect({x:0,y:3.45,w:0.75,h:1.2,t:'kast',l:'kast',fs:9}),
+        rect({x:0,y:4.75,w:0.75,h:1.2,t:'wet',l:'wc',fs:9}),
+        rect({x:0,y:6.05,w:0.75,h:0.55,t:'kast'}),
+        rect({x:0,y:7.6,w:2.02,h:3.0,t:'wet',l:'Keuken|5 m²'}),
+        stairs(0,1.9,0.72,1.5,8),
+        dim()
+      ].join(''),
+      straks:()=>[
+        rect({x:2.6,y:-0.52,w:3.22,h:0.55,t:'live'}),
+        rect({x:2.02,y:0,w:3.8,h:4.5,t:'live',l:'Zitkamer|erkerbank + bieb'}),
+        rect({x:2.6,y:0.05,w:3.15,h:0.5,t:'kast',thin:true}),
+        rect({x:2.02,y:4.6,w:3.8,h:4.08,t:'live',l:'Eetkamer|marmeren schouw'}),
+        glassLine(2.25,4.55,5.6,4.55,'stalen en-suite deuren'),
+        poly([[0,7.6],[2.02,7.6],[2.02,8.68],[5.82,8.68],[5.82,12.0],[0,12.0]],'nw','Leefkeuken|uitbouw',3.35,10.75),
+        rect({x:0,y:7.75,w:0.65,h:4.1,t:'kast',thin:true}),
+        rect({x:1.3,y:9.35,w:2.7,h:0.95,t:'wet',thin:true,l:'kookeiland',fs:10}),
+        rect({x:2.02,y:8.68,w:3.8,h:0.55,t:'nw',dash:true,thin:true}),
+        `<text x="${X(3.92)}" y="${Y(8.95)+4}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--door)">lichtstraat</text>`,
+        glassLine(0.2,12.0,5.62,12.0,'pui naar de tuin'),
+        rect({x:0,y:0,w:2.02,h:3.35,t:'circ',l:'Entree'}),
+        rect({x:0.75,y:3.35,w:1.27,h:4.25,t:'circ',l:'Hal',fs:11}),
+        rect({x:0,y:3.45,w:0.75,h:1.2,t:'kast',l:'garderobe',fs:8}),
+        rect({x:0,y:4.75,w:0.75,h:1.2,t:'wet',l:'wc',fs:9}),
+        rect({x:0,y:6.05,w:0.75,h:0.55,t:'kast',l:'mk',fs:8}),
+        stairs(0,1.9,0.72,1.5,8),
+        glassLine(2.02,5.7,2.02,7.4,''),
+        dim()
+      ].join('')
+    },
+    v1:{
+      nu:()=>[
+        rect({x:2.02,y:0,w:3.84,h:3.77,t:'sleep',l:'Slaapkamer|15 m²'}),
+        rect({x:2.02,y:3.77,w:1.25,h:0.9,t:'kast',l:'kast',fs:9}),
+        rect({x:3.27,y:3.77,w:1.22,h:0.9,t:'kast',l:'kast',fs:9}),
+        rect({x:4.49,y:3.77,w:1.37,h:0.9,t:'kast',l:'kast',fs:9}),
+        rect({x:2.02,y:4.67,w:3.84,h:3.83,t:'sleep',l:'Slaapkamer|15 m², wastafel'}),
+        rect({x:0,y:0,w:2.02,h:2.5,t:'sleep',l:'Kamer|5 m²',fs:11}),
+        rect({x:0,y:2.5,w:2.02,h:3.5,t:'circ',l:'Overloop',fs:11}),
+        stairs(0,2.7,0.72,1.9,9),
+        rect({x:0,y:6.0,w:1.7,h:2.5,t:'wet',l:'Bad|bad + geiser',fs:11}),
+        rect({x:0,y:8.5,w:1.7,h:1.4,t:'out',l:'balkon',fs:10}),
+        dim()
+      ].join(''),
+      straks:()=>[
+        rect({x:2.02,y:0,w:3.84,h:3.77,t:'sleep',l:'Kinderkamer|of logeerkamer'}),
+        rect({x:2.02,y:3.77,w:1.25,h:0.9,t:'kast',l:'kast',fs:9}),
+        rect({x:3.27,y:3.77,w:2.59,h:0.9,t:'nw',l:'kastenwand master',fs:9}),
+        rect({x:2.02,y:4.67,w:3.84,h:3.83,t:'sleep',l:'Master bedroom|tuinzicht'}),
+        rect({x:0,y:0,w:2.02,h:2.5,t:'sleep',l:'Werkkamer',fs:11}),
+        rect({x:0,y:2.5,w:2.02,h:3.5,t:'circ',l:'Overloop|+ vlizotrap',fs:11}),
+        rect({x:0.9,y:4.9,w:1.0,h:1.0,t:'kast',l:'was',fs:8}),
+        stairs(0,2.7,0.72,1.9,9),
+        rect({x:0,y:6.0,w:1.7,h:2.5,t:'nw',l:'Badkamer|douche + wc',fs:11}),
+        rect({x:0.05,y:7.35,w:1.0,h:1.1,t:'wet',thin:true,dash:true}),
+        rect({x:0,y:8.5,w:1.7,h:1.4,t:'out',l:'balkon',fs:10}),
+        dim()
+      ].join('')
+    }
+  };
+  const notes={
+    bg:{
+      nu:`<h4>Begane grond nu</h4><ol><li>Twee losse kamers (woon- en zitkamer) met een dichtgezette en-suite.</li><li>Keukentje van 5 m² naast een gammele serre, beide met slechte aansluiting op de tuin.</li><li>Lange, donkere hal met toilet en kasten.</li><li>Verwarming met gaskachels, geen centrale verwarming.</li></ol>`,
+      straks:`<h4>Begane grond straks</h4><ol><li><b>Zitkamer</b> voor met erkerbank en boekenkasten in de nissen.</li><li><b>Stalen en-suite deuren</b> zodat voor- en middenkamer open en dicht kunnen.</li><li><b>Eetkamer</b> rond de originele marmeren schouw.</li><li><b>Uitbouw van ca. 3,3 m</b> over de volle breedte: leefkeuken met eiland, lichtstraat en een pui naar de tuin. Samen ruim 20 m² extra leefruimte die écht bruikbaar is.</li><li><b>Hal</b> met ribbelglas binnenraam voor daglicht, nieuwe wc en garderobe.</li></ol>`
+    },
+    v1:{
+      nu:`<h4>Eerste verdieping nu</h4><ol><li>Twee slaapkamers van 15 m² met drie kasten ertussen.</li><li>Klein kamertje van 5 m² aan de voorkant.</li><li>Badkamer met bad en geiser, geen toilet boven.</li><li>Balkon aan de achterzijde via de badkamer.</li></ol>`,
+      straks:`<h4>Eerste verdieping straks</h4><ol><li><b>Master bedroom</b> achter, met twee kasten samengevoegd tot een kastenwand.</li><li><b>Kinder- of logeerkamer</b> voor, met de derde kast.</li><li><b>Werkkamer</b> in het kleine kamertje.</li><li><b>Badkamer</b> met inloopdouche, zwevend toilet en badmeubel. Geiser weg.</li><li><b>Wasmachine</b> in de overloopkast, vlizotrap naar de zolder voor de boiler en opslag.</li></ol>`
+    }
+  };
+  let fl='bg', st='straks';
+  function drawPlan(){
+    const W=PADX*2+5.86*S, H=PADY*2+(DEPTH+0.6)*S+10;
+    document.getElementById('plan').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Plattegrond ${fl==='bg'?'begane grond':'eerste verdieping'} ${st}">${plans[fl][st]()}</svg>`;
+    document.getElementById('plan-notes').innerHTML=notes[fl][st];
+    [['fl-bg',fl==='bg'],['fl-1',fl==='v1'],['st-nu',st==='nu'],['st-straks',st==='straks']].forEach(([id,on])=>document.getElementById(id).setAttribute('aria-pressed',on));
+  }
+  document.getElementById('fl-bg').onclick=()=>{fl='bg';drawPlan()};
+  document.getElementById('fl-1').onclick=()=>{fl='v1';drawPlan()};
+  document.getElementById('st-nu').onclick=()=>{st='nu';drawPlan()};
+  document.getElementById('st-straks').onclick=()=>{st='straks';drawPlan()};
+  drawPlan();
+
+  /* ---------- begroting ---------- */
+  const A=['slim','vt','kzk'], VK=['vt','kzk'];
+  const items=[
+    ['Basis en casco',[
+      ['keur','Bouwkundige keuring + funderingsonderzoek',2500,5000,A],
+      ['sloop','Strippen, sloop en afvoer',5000,9000,A],
+      ['asb','Asbestinventarisatie en sanering (indicatief)',2000,7000,A],
+      ['elek','Elektra volledig nieuw, 3-fase groepenkast',8000,14000,A],
+      ['leid','Water, afvoer en gas opnieuw aanleggen',4000,8000,A],
+      ['stuc','Stucwerk wanden en plafonds, heel huis',9000,15000,A],
+      ['herst','Herstel scheuren, schoorsteen, daklekkage, balkon',2500,7000,A]]],
+    ['Verduurzaming',[
+      ['viso','Vloerisolatie via de kruipruimte',2000,4000,A],
+      ['spouw','Spouwmuurisolatie (als er een spouw is)',1500,3000,A],
+      ['diso','Dakisolatie aan de binnenkant',6000,11000,A],
+      ['glas','HR++ of triple glas, nieuwe kozijnen waar nodig',8000,15000,A],
+      ['vent','Mechanische ventilatie, CO2-gestuurd',3000,6000,A],
+      ['hyb','Hybride warmtepomp + cv-ketel en radiatoren',8000,12000,['slim']],
+      ['wp','Volledig elektrische warmtepomp + vloerverwarming',16000,24000,VK],
+      ['zon','Zonnepanelen (8 tot 10 stuks)',3500,5500,VK]]],
+    ['Afbouw en interieur',[
+      ['keuk','Keuken incl. apparatuur en montage',10000,28000,A],
+      ['bad','Badkamer met inloopdouche en toilet',12000,22000,A],
+      ['wc','Toilet beneden',3000,5500,A],
+      ['vloer','Vloeren: eiken visgraat beneden, planken boven',7000,14000,A],
+      ['deur','Stalen en-suite deuren, binnendeuren, trap opknappen',5000,12000,VK],
+      ['maat','Maatwerk: erkerbank, nis-kasten, kastenwand',4000,11000,VK],
+      ['verf','Schilderwerk binnen (kalkverf, lakwerk)',4000,8000,A],
+      ['licht','Verlichting en armaturen',1500,5000,A]]],
+    ['Uitbouw en buiten',[
+      ['pui','Serre slopen, nieuwe achterpui (plan B)',7000,12000,['slim']],
+      ['uitb','Uitbouw ca. 3,3 × 5,8 m met lichtstraat en pui',48000,72000,VK],
+      ['tuin','Tuin: terras, beplanting, schutting',5000,15000,VK],
+      ['tkam','Schuur ombouwen tot tuinkamer',5000,12000,['kzk']],
+      ['dakk','Dakkapel achterzijde + vaste trap (fase 2)',13000,20000,['kzk']]]]
+  ];
+  const lvlFor={slim:0,vt:1,kzk:1};
+  let sc='vt', lv=1, on={};
+  function applyScenario(s){sc=s;lv=lvlFor[s];on={};items.forEach(g=>g[1].forEach(it=>{on[it[0]]=it[4].includes(s)}));}
+  const eur=n=>'€ '+(Math.round(n/100)*100).toLocaleString('nl-NL');
+  const val=it=>it[2]+(it[3]-it[2])*(lv/2);
+  function renderBudget(){
+    const list=document.getElementById('b-list');
+    list.innerHTML=items.map(g=>`<div class="b-group">${g[0]}</div>`+g[1].map(it=>`<label class="b-item ${on[it[0]]?'on':''}" for="bi-${it[0]}"><input type="checkbox" id="bi-${it[0]}" data-id="${it[0]}" ${on[it[0]]?'checked':''}><span>${it[1]}</span><em>${eur(val(it))}</em></label>`).join('')).join('');
+    list.querySelectorAll('input').forEach(cb=>cb.onchange=()=>{on[cb.dataset.id]=cb.checked;renderBudget()});
+    let sub=0;items.forEach(g=>g[1].forEach(it=>{if(on[it[0]])sub+=val(it)}));
+    const unf=sub*0.10, tot=sub+unf, koop=Number(document.getElementById('koopsom').value)||0;
+    document.getElementById('b-sub').textContent=eur(sub);
+    document.getElementById('b-unf').textContent=eur(unf);
+    document.getElementById('b-tot').textContent=eur(tot);
+    document.getElementById('b-big').textContent=eur(tot);
+    document.getElementById('b-all').textContent=eur(tot+koop);
+    const m2=121+(on.uitb?19:0)+(on.dakk?12:0);
+    document.getElementById('b-m2').textContent=m2+' m²';
+    document.getElementById('b-mw').textContent=eur(m2*4100);
+    A.forEach(s=>document.getElementById('sc-'+s).setAttribute('aria-pressed',s===sc));
+    [0,1,2].forEach(l=>document.getElementById('lv-'+l).setAttribute('aria-pressed',l===lv));
+  }
+  A.forEach(s=>document.getElementById('sc-'+s).onclick=()=>{applyScenario(s);renderBudget()});
+  [0,1,2].forEach(l=>document.getElementById('lv-'+l).onclick=()=>{lv=l;renderBudget()});
+  document.getElementById('koopsom').oninput=renderBudget;
+  applyScenario('vt');renderBudget();
+
+  /* ---------- checklist ---------- */
+  const checks=[
+    ['Kruipruimte','Luik openen: hoe hoog, droog of nat, staat van de balken, liggen er nog loden leidingen?'],
+    ['Fundering','Vraag naar funderingstype en eventueel eerder onderzoek. Zie je scheefstand in deuren, vloeren of kozijnen?'],
+    ['Scheuren achterslaapkamer','Lopen ze ook buiten door het metselwerk? Alleen stucwerk is geen probleem, doorlopende scheuren wel.'],
+    ['Zolder','Is er een vliering? Hoe hoog is de nok? Lekkage of vochtplekken rond de schoorsteen aan de binnenkant van het dak?'],
+    ['Spouwmuur','Is er een spouw en is die leeg? Een isolatiebedrijf kan dit met een klein gaatje checken.'],
+    ['Meterkast','Hoe oud is de groepenkast, is er een aardlek, hoeveel groepen? Zit er een loden leiding bij de watermeter?'],
+    ['Asbest','Serre- en schuurdak, vinyl vloerzeil, platen achter de kachels. Vraag of er een asbestinventarisatie is.'],
+    ['Tuinligging','Kompas-app openen in de tuin. De advertentie zegt zowel zuiden, zuidoosten als noordoosten.'],
+    ['Balkon','Is de dakbedekking goed? Lekkage boven het keukentje?'],
+    ['Opknapclausule','Wat staat er precies in, en wat laat de verkoper achter (schuur, kachels, gordijnen)?'],
+    ['Achterom','Van wie is het achterpad en mag je daar een fiets of container stallen?'],
+    ['Buren rechts','Hebben ze een vergunning voor hun opbouw gehad? Een praatje levert vaak tips over aannemer en gemeente op.'],
+    ['Geur en vocht','Ruikt het muf in de kamers of de kast onder de trap?'],
+    ['Waarom niet zelf bewoond','Vraag de makelaar naar de achtergrond en bekende gebreken. Ze moeten melden wat ze weten.']
+  ];
+  const KEY='vs49-check';
+  let done={}; try{done=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){done={}}
+  const cl=document.getElementById('checklist');
+  cl.innerHTML=checks.map((c,i)=>`<label for="ck-${i}"><input type="checkbox" id="ck-${i}" ${done[i]?'checked':''}><span><b>${c[0]}.</b> ${c[1]}</span></label>`).join('');
+  cl.querySelectorAll('input').forEach((cb,i)=>cb.onchange=()=>{done[i]=cb.checked;try{localStorage.setItem(KEY,JSON.stringify(done))}catch(e){}});
+})();
+</script>
+
+</html>
