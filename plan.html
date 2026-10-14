@@ -96,7 +96,7 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
 
 /* plans */
 .plan-ui{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.seg{display:inline-flex;border:1px solid var(--ink)}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--ink)}
 .seg button{font:600 .8rem var(--f-mono);background:transparent;color:var(--ink);border:0;padding:8px 14px;cursor:pointer}
 .seg button+button{border-left:1px solid var(--ink)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
@@ -191,7 +191,9 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
 
 <nav class="toc" aria-label="Secties">
   <ul>
-    <li><a href="index.html">3D-model</a></li>
+    <li><a href="index.html">Alle plannen</a></li>
+    <li><a href="3d.html#planA">3D plan A</a></li>
+    <li><a href="3d.html#planB">3D plan B</a></li>
     <li><a href="#oordeel">Oordeel</a></li>
     <li><a href="#concept">Stijl</a></li>
     <li><a href="#plattegrond">Plattegrond</a></li>
@@ -356,9 +358,19 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
     </div>
   </article>
   <div class="planb">
-    <h4>Plan B: zonder uitbouw (scheelt € 40.000 tot € 60.000)</h4>
+    <h4>Sobere variant: zonder uitbouw (scheelt € 40.000 tot € 60.000)</h4>
     <p>Serre slopen en de achtergevel van de middenkamer voorzien van een nieuwe pui met openslaande deuren. De keuken komt dan als één wand met eiland in de middenkamer, de eettafel schuift richting de stalen deuren. Het oude keukentje wordt bijkeuken met wasmachine en voorraad. Minder spectaculair, maar slim, en de uitbouw kan altijd later nog.</p>
   </div>
+
+  <article class="room" id="planb">
+    <div class="room-id"><h3>Plan B: L-vorm met tuinkamer aan huis</h3><span class="m2">aanbouw ca. 2,5 × 5,5 m + schuur 2,8 × 1,9 m · <a href="3d.html#planB">bekijk in 3D</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>Bovenop de uitbouw van plan A komt op de plek van de oude schuur een aanbouw vast aan het huis. Samen vormen ze een L. Direct achter de keuken een bijkeuken met eigen deur naar buiten, daarachter een tuinkamer met een glazen pui naar de patio. De oude schuur wordt gesloopt; achterin de tuin, naast de poort, komt een nieuwe houten schuur voor fietsen en tuingereedschap.</p></div>
+      <div><h4>Styling</h4><p>Bijkeuken in hetzelfde olijfgroen als de keuken, met wasmachine en droger gestapeld en cementtegels op de vloer. De tuinkamer krijgt de visgraat door, een daybed in olijf, een bureau voor het raam en een rotan hanglamp. De nieuwe schuur zwart gebeitst met een flessengroene deur en een sedumdak.</p></div>
+      <div><h4>Let op</h4><p>De aanbouw reikt tot ruim 9 m achter de oorspronkelijke achtergevel. Dat is meer dan de vergunningvrije 4 m, dus je hebt een omgevingsvergunning nodig (reken op circa 8 weken). Bespreek het vooraf met de gemeente Vlaardingen en de buren links, want de aanbouw komt tegen hun erfgrens.</p></div>
+      <div class="wow"><h4>Wow-moment</h4><p>De patio. Door de L-vorm zit je uit de wind, met aan twee kanten glas, en vanuit de keuken kijk je schuin de tuinkamer in. Fietsen gaan via de poort direct de schuur in.</p></div>
+    </div>
+  </article>
 
   <article class="room">
     <div class="room-id"><h3>Overloop</h3><span class="m2">ca. 2,0 × 3,5 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/40">foto 40</a></span></div>
@@ -465,6 +477,7 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
         <div class="seg" role="group" aria-label="Scenario">
           <button id="sc-slim" data-sc="slim" aria-pressed="false">Slim &amp; netjes</button>
           <button id="sc-vt" data-sc="vt" aria-pressed="true">vtwonen-niveau</button>
+          <button id="sc-pb" data-sc="pb" aria-pressed="false">Plan B: L-vorm</button>
           <button id="sc-kzk" data-sc="kzk" aria-pressed="false">KZK-droom</button>
         </div>
       </div>
@@ -649,7 +662,7 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
   drawPlan();
 
   /* ---------- begroting ---------- */
-  const A=['slim','vt','kzk'], VK=['vt','kzk'];
+  const A=['slim','vt','pb','kzk'], VK=['vt','pb','kzk'];
   const items=[
     ['Basis en casco',[
       ['keur','Bouwkundige keuring + funderingsonderzoek',2500,5000,A],
@@ -678,13 +691,15 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
       ['verf','Schilderwerk binnen (kalkverf, lakwerk)',4000,8000,A],
       ['licht','Verlichting en armaturen',1500,5000,A]]],
     ['Uitbouw en buiten',[
-      ['pui','Serre slopen, nieuwe achterpui (plan B)',7000,12000,['slim']],
+      ['pui','Serre slopen, nieuwe achterpui (zonder uitbouw)',7000,12000,['slim']],
       ['uitb','Uitbouw ca. 3,3 × 5,8 m met lichtstraat en pui',48000,72000,VK],
       ['tuin','Tuin: terras, beplanting, schutting',5000,15000,VK],
       ['tkam','Schuur ombouwen tot tuinkamer',5000,12000,['kzk']],
-      ['dakk','Dakkapel achterzijde + vaste trap (fase 2)',13000,20000,['kzk']]]]
+      ['dakk','Dakkapel achterzijde + vaste trap (fase 2)',13000,20000,['kzk']],
+      ['zij','Plan B: aanbouw op plek van de schuur (bijkeuken + tuinkamer)',40000,60000,['pb']],
+      ['schuurN','Plan B: nieuwe schuur bij de poort',3000,7000,['pb']]]]
   ];
-  const lvlFor={slim:0,vt:1,kzk:1};
+  const lvlFor={slim:0,vt:1,pb:1,kzk:1};
   let sc='vt', lv=1, on={};
   function applyScenario(s){sc=s;lv=lvlFor[s];on={};items.forEach(g=>g[1].forEach(it=>{on[it[0]]=it[4].includes(s)}));}
   const eur=n=>'€ '+(Math.round(n/100)*100).toLocaleString('nl-NL');
@@ -700,7 +715,7 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
     document.getElementById('b-tot').textContent=eur(tot);
     document.getElementById('b-big').textContent=eur(tot);
     document.getElementById('b-all').textContent=eur(tot+koop);
-    const m2=121+(on.uitb?19:0)+(on.dakk?12:0);
+    const m2=121+(on.uitb?19:0)+(on.zij?14:0)+(on.dakk?12:0);
     document.getElementById('b-m2').textContent=m2+' m²';
     document.getElementById('b-mw').textContent=eur(m2*4100);
     A.forEach(s=>document.getElementById('sc-'+s).setAttribute('aria-pressed',s===sc));
