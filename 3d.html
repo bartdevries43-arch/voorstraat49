@@ -77,9 +77,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
       <button id="collapse" aria-expanded="true" aria-controls="pbody">Inklappen</button>
     </div>
     <div id="pbody">
-      <p class="sub">Warm jaren '30, zoals vtwonen en Kopen Zonder Kijken het nu doen. Klik op een meubel, vloer of detail voor uitleg en prijsindicatie. Plan B: de schuur wordt een tuinkamer aan het huis, met een nieuwe schuur bij de poort.</p>
+      <p class="sub">Warm jaren '30, zoals vtwonen en Kopen Zonder Kijken het nu doen. Klik op een meubel, vloer of detail voor uitleg en prijsindicatie. Plan B: tuinkamer aan het huis. Plan C: geen tuinkamer, schuur achterin en een wasruimte boven.</p>
       <div class="ctl"><span>Variant</span>
-        <div class="seg"><button id="p-a" aria-pressed="false">Plan A: uitbouw</button><button id="p-b" aria-pressed="true">Plan B: L-vorm</button></div>
+        <div class="seg"><button id="p-a" aria-pressed="false">A: uitbouw</button><button id="p-b" aria-pressed="false">B: L-vorm</button><button id="p-c" aria-pressed="true">C: schuur achter</button></div>
       </div>
       <div class="ctl"><span>Verdieping</span>
         <div class="seg"><button id="f-bg" aria-pressed="true">Begane grond + tuin</button><button id="f-1" aria-pressed="false">1e verdieping</button></div>
@@ -118,7 +118,8 @@ if(!window.THREE||!THREE.OrbitControls){document.getElementById('loading').hidde
 /* ================= basis ================= */
 const app=document.getElementById('app');
 const FF=2.9, H0=2.8, H1=2.6, LOW=1.15;
-let planSel=(location.hash==='#planA')?'A':'B', wallMode='laag', floorSel='bg', evening=false, showLabels=true;
+const hashPlan=()=>({'#planA':'A','#planB':'B','#planC':'C'})[location.hash]||'C';
+let planSel=hashPlan(), wallMode='laag', floorSel='bg', evening=false, showLabels=true;
 const P=(x,z)=>[x-2.93, 6-z];
 const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -343,6 +344,8 @@ const I={
  bijkeuken:['Bijkeuken','Wasmachine en droger gestapeld in een olijfgroene kastenwand, met een eigen deur naar de patio. Natte jassen, laarzen en boodschappen komen hier binnen, niet in de keuken.','Kasten · ca. € 2.000 - € 4.000'],
  schuurNieuw:['Nieuwe schuur bij de poort','Houten schuur van ca. 2,8 × 1,9 m naast de achterom, zwart gebeitst en met een sedumdak. Fietsen gaan direct de poort in en uit, zonder door de tuin te slepen.','ca. € 3.000 - € 7.000 incl. fundering'],
  patio:['Patio','Door de L-vorm ontstaat een beschut terras tussen keuken en tuinkamer: uit de wind, met aan twee kanten glas.','Tuin totaal · ca. € 5.000 - € 15.000'],
+ wasruimte:['Wasruimte boven (plan C)','Het kleine kamertje van 5 m² wordt een echte wasruimte: wasmachine en droger naast elkaar onder een eiken werkblad, een uitstortgootsteen, kasten erboven en een droogrek aan het plafond. De was gebeurt waar de kleding ligt, zonder trap.','Bouw · ca. € 3.000 - € 6.000 (leidingen, afvoer, ventilatie, kasten, tegels)'],
+ linnen:['Linnenkast op de overloop','In plan C hoeft de wasmachine hier niet meer in: dit wordt de kast voor handdoeken, beddengoed en de stofzuiger.','ca. € 600 - € 1.200'],
  luifel:['Luifel boven de erker','Origineel jaren \'30 detail: herstellen en in het groen van de voordeur schilderen.','Onderdeel gevelonderhoud']
 };
 
@@ -566,6 +569,7 @@ function buildFirst(g){
   const kwh=Math.min(2.5,cutH());const kw=cabinets(2.54,kwh,0.95,0.635,mat('kastw',0xE8E1D4,{roughness:0.9}),mat('kastwc',0xC9C1B2));kw.userData.info=I.kastenwand;place(g,kw,4.57,4.245,Math.PI,y);
   PB(g,2.1,3.85,3.24,3.88,y+1.75,y+1.78,mOak);[0x9A4F33,0xDDD3C2,0x1F3D32,0xC99A4A].forEach((c,i)=>PB(g,2.25+i*0.22,4.0,2.4+i*0.22,4.6,y+0.95,y+1.75,mat('kleed'+i,c,{roughness:1})));
 
+  if(planSel!=='C'){
   // werkkamer
   const bu=G(I.bureau);g.add(bu);PB(bu,0.02,0.0,1.97,0.62,y+0.72,y+0.75,mOak);PB(bu,1.45,0.02,1.95,0.6,y,y+0.72,mOak);PB(bu,0.04,0.02,0.08,0.6,y,y+0.72,mOak);
   [1.35,1.75].forEach(h=>PB(bu,0.02,0.0,1.97,0.26,y+h,y+h+0.03,mOak));
@@ -574,6 +578,7 @@ function buildFirst(g){
   {const lp=G(I.bureau);place(g,lp,0.3,0.25,0,y+0.75);tableLamp(lp,0,0,0);}
   const oc=chair('rotan');oc.userData.info=I.bureau;place(g,oc,0.95,1.05,0,y);place(g,plant(0.7),1.75,0.3,0,y+0.75);
   rug(g,0.25,0.85,1.75,2.2,y,'jute');
+  } else buildLaundry(g,y,H);
   // kinderkamer
   const ok=mat('oker',C.oker,{roughness:0.95});
   PB(g,2.07,0.0,2.081,2.85,y,y+1.2,ok,I.oker);PB(g,5.849,0.0,5.86,3.67,y,y+1.2,ok,I.oker);PB(g,3.22,3.656,5.86,3.667,y,y+1.2,ok,I.oker);PB(g,2.07,3.656,2.17,3.667,y,y+1.2,ok,I.oker);
@@ -587,7 +592,7 @@ function buildFirst(g){
   pendant(g,3.94,1.85,y+1.95,y+H,'rattan',0.28,I.speel);addLight(g,3.94,y+1.8,1.85,0.9,6);
   // overloop
   PB(g,1.959,3.65,1.97,5.0,y,y+1.2,mOlijf,I.lambris);PB(g,0,4.6,0.011,5.95,y,y+1.2,mOlijf,I.lambris);
-  const wk=cabinets(0.95,Math.min(2.2,cutH()),0.6,0.475,mOlijf);wk.userData.info=I.waskast;place(g,wk,1.66,5.47,-Math.PI/2,y);
+  const wk=cabinets(0.95,Math.min(2.2,cutH()),0.6,0.475,mOlijf);wk.userData.info=planSel==='C'?I.linnen:I.waskast;place(g,wk,1.66,5.47,-Math.PI/2,y);
   rug(g,0.95,2.65,1.75,4.85,y,'runner');
   // master
   PB(g,5.845,4.77,5.86,8.5,y,y+Math.min(H,cutH()),mat('groenW',C.groen,{roughness:0.95}),I.groenwand);
@@ -613,6 +618,33 @@ function buildFirst(g){
   for(let i=0;i<6;i++){const q=i<3?[0.1,9.0+i*0.35]:[0.4+(i-3)*0.4,9.95];const p=P(q[0],q[1]);Sp(g,0.13,p[0],y+1.3,p[1],mat(i%2?'tl2':'leafL',i%2?0x6E8B4E:0x8A9A5B,{roughness:0.95}),0.8,10);}
 }
 
+
+/* ================= plan C: wasruimte boven ================= */
+function buildLaundry(g,y,H){
+  const L=G(I.wasruimte);g.add(L);
+  floorPoly(L,[[0,0],[2.02,0],[2.02,2.5],[0,2.5]],mTerrazzo,y+0.003,I.wasruimte);
+  const top=Math.min(H,cutH());
+  PB(L,0,0.0,0.012,2.45,y,y+1.25,mSageT);PB(L,0,2.438,1.1,2.45,y,y+1.25,mSageT);
+  // machines naast elkaar onder werkblad
+  const mW=mat('washglass',0x6C7A80,{roughness:0.15,metalness:0.3});
+  [0.45,1.1].forEach(z=>{PB(L,0.02,z-0.3,0.62,z+0.3,y,y+0.85,mPorc);disc(L,0.625,y+0.45,z,0.19,'x',mat('ring',0xD9DAD5),0.02);disc(L,0.635,y+0.45,z,0.14,'x',mW,0.02);PB(L,0.6,z-0.25,0.622,z+0.05,y+0.72,y+0.8,mat('panel',0xCFD1CC));});
+  PB(L,0,0.1,0.66,2.0,y+0.86,y+0.9,mOak);
+  // uitstortgootsteen in kast
+  PB(L,0.02,1.45,0.62,2.0,y,y+0.86,mOlijf);PB(L,0.1,1.52,0.55,1.93,y+0.9,y+0.905,mat('sink',0x55585A,{metalness:0.7,roughness:0.3}));
+  {const tp=G(I.wasruimte);place(L,tp,0.06,1.72,0,y+0.9);Cy(tp,0.015,0.015,0.3,0,0,0,mBrass,10);B(tp,0.18,0.02,0.02,0.09,0.28,0,mBrass);}
+  // kasten erboven
+  if(top>1.6){const up=cabinets(1.9,Math.min(0.75,top-1.5),0.36,0.475,mOlijf);up.userData.info=I.wasruimte;place(L,up,0.18,1.05,Math.PI/2,y+1.5);}
+  // manden en wasmand
+  [[1.2,0.35,0xC2AA82],[1.65,0.35,0xDDD3C2]].forEach(q=>{const b=G(I.wasruimte);place(L,b,q[0],q[1],0,y);Cy(b,0.2,0.17,0.45,0,0,0,mat('mand'+q[2],q[2],{roughness:1}),18);});
+  // opgevouwen strijkplank tegen de wand
+  PB(L,1.93,1.2,1.97,2.3,y,y+1.4,mat('strijk',0xB4C0A7,{roughness:0.9}),I.wasruimte);
+  // plafond-droogrek
+  if(wallMode==='hoog'){for(let k=0;k<5;k++)PB(L,0.9,0.4+k*0.18,1.85,0.42+k*0.18,y+2.25,y+2.27,mOak,I.wasruimte);[0.95,1.8].forEach(x=>PB(L,x,0.38,x+0.03,1.16,y+2.27,y+H,mat('cord',0x222222),I.wasruimte));
+    [[1.1,0.58,0xF4F0E8],[1.4,0.76,0x9A4F33],[1.25,0.94,0x8C8C69]].forEach(q=>PB(L,q[0]-0.15,q[1]-0.01,q[0]+0.15,q[1]+0.01,y+1.75,y+2.25,mat('was'+q[2],q[2],{roughness:1}),I.wasruimte));}
+  place(L,plant(0.5),0.35,1.95,0,y+0.9);
+  addLight(g,1.0,y+2.0,1.25,0.6,3.5);
+}
+
 /* ================= massa onder 1e verdieping ================= */
 function buildMass(g){
   const roof=mat('roof',0x8D8F88,{roughness:0.95});
@@ -632,22 +664,25 @@ function buildMass(g){
 function buildGarden(g){
   const yg=-0.12;
   floorPoly(g,[[0,12],[5.86,12],[5.86,26.5],[0,26.5]],texMat('gravel',TX.gravel,{roughness:1}),yg-0.008);
-  const B_=planSel==='B';
-  if(!B_){floorPoly(g,[[0,12.0],[5.86,12.0],[5.86,16.0],[2.6,16.0],[2.6,12.9],[0,12.9]],texMat('terrace',TX.terrace,{roughness:0.8}),yg,I.terras);
+  const B_=planSel==='B', C_=planSel==='C';
+  if(C_){floorPoly(g,[[0,12.0],[5.86,12.0],[5.86,16.0],[0,16.0]],texMat('terrace',TX.terrace,{roughness:0.8}),yg,I.terras);
+  floorPoly(g,[[1.2,16],[5.0,16],[5.0,21.3],[1.2,21.3]],texMat('grass',TX.grass,{roughness:1}),yg-0.002,I.gazon);}
+  else if(!B_){floorPoly(g,[[0,12.0],[5.86,12.0],[5.86,16.0],[2.6,16.0],[2.6,12.9],[0,12.9]],texMat('terrace',TX.terrace,{roughness:0.8}),yg,I.terras);
   floorPoly(g,[[2.6,16],[5.0,16],[5.0,21.3],[2.6,21.3]],texMat('grass',TX.grass,{roughness:1}),yg-0.002,I.gazon);}
   else{floorPoly(g,[[2.7,12.0],[5.86,12.0],[5.86,16.5],[2.7,16.5]],texMat('terrace',TX.terrace,{roughness:0.8}),yg,I.patio);
   floorPoly(g,[[1.2,17.9],[5.0,17.9],[5.0,21.3],[1.2,21.3]],texMat('grass',TX.grass,{roughness:1}),yg-0.002,I.gazon);}
   const soil=texMat('soil',TX.soil,{roughness:1});
   floorPoly(g,[[5.0,B_?16.5:16],[5.86,B_?16.5:16],[5.86,26.5],[5.0,26.5]],soil,yg-0.004,I.border);
-  if(!B_){floorPoly(g,[[0,18.3],[2.6,18.3],[2.6,21.3],[0,21.3]],soil,yg-0.004,I.border);floorPoly(g,[[0,24.8],[2.0,24.8],[2.0,26.5],[0,26.5]],soil,yg-0.004,I.border);}
+  if(C_)floorPoly(g,[[0,16.0],[1.2,16.0],[1.2,24.4],[0,24.4]],soil,yg-0.004,I.border);
+  else if(!B_){floorPoly(g,[[0,18.3],[2.6,18.3],[2.6,21.3],[0,21.3]],soil,yg-0.004,I.border);floorPoly(g,[[0,24.8],[2.0,24.8],[2.0,26.5],[0,26.5]],soil,yg-0.004,I.border);}
   else floorPoly(g,[[0,17.85],[1.2,17.85],[1.2,24.4],[0,24.4]],soil,yg-0.004,I.border);
-  for(let z=B_?16.7:16.3;z<(B_?24.3:21.2);z+=0.62)PB(g,2.95,z,3.45,z+0.36,yg,yg+0.03,mat('step',0xB9B0A0,{roughness:0.9}),I.gazon);
+  for(let z=B_?16.7:16.3;z<(planSel==='A'?21.2:24.3);z+=0.62)PB(g,2.95,z,3.45,z+0.36,yg,yg+0.03,mat('step',0xB9B0A0,{roughness:0.9}),I.gazon);
   // schutting
   const fm=texMat('fence',TX.fence,{roughness:0.9});const fh=wallMode==='laag'?LOW:1.8;
   PB(g,-0.14,12.2,-0.1,26.6,yg,yg+fh,fm,I.schutting);PB(g,5.96,12.2,6.0,26.6,yg,yg+fh,fm,I.schutting);PB(g,-0.14,26.56,4.5,26.6,yg,yg+fh,fm,I.schutting);PB(g,5.5,26.56,6.0,26.6,yg,yg+fh,fm,I.schutting);
   PB(g,4.5,26.57,5.5,26.59,yg,yg+fh,mat('poort',0x2E2722,{roughness:0.9}),I.schutting);
   [[5.94,13.0,2.2],[5.94,19.5,1.6],[-0.08,22.5,2.0]].forEach(q=>{const p=P(q[0],q[1]);for(let i=0;i<7;i++){Sp(g,0.22,p[0]+(q[0]<1?0.05:-0.05),yg+0.3+((i*0.53)%Math.min(fh,1.6)),p[1]-(i*0.3)+q[2]*0.5-0.9,mat(i%2?'tl1':'climb',i%2?0x56743F:0x4A6436,{roughness:0.95}),1,8);}});
-  if(!B_){
+  if(planSel==='A'){
   // tuinkamer
   const tk=G(I.tuinkamer);g.add(tk);const dk=mat('tkw',0x2B2A27,{roughness:0.9});const dmats=[dk,dk,mTop,dk,dk,dk];
   wall(tk,0.05,12.95,2.5,12.95,{t:0.1,y:yg,h:2.45,mats:dmats,open:[[0.9,1.9,0.8,2.0,'w']]});
@@ -661,7 +696,7 @@ function buildGarden(g){
   place(tk,plant(0.9,'tall'),0.4,13.4,0,yg);addLight(tk,1.3,yg+1.9,15.6,0.6,4);
   } else buildNewShed(g,yg);
   // warmtepomp
-  const wp=G(I.wp);place(g,wp,B_?0.6:0.55,B_?18.05:12.4,0,yg);B(wp,0.9,0.72,0.36,0,0.06,0,mat('wpW',0xD9DAD5,{roughness:0.6}));{const f=new THREE.Mesh(new THREE.CylinderGeometry(0.24,0.24,0.02,24),mat('wpF',0x3A3C3D));f.rotation.x=Math.PI/2;f.position.set(-0.12,0.42,0.18);wp.add(f);}[-0.3,0.3].forEach(x=>B(wp,0.06,0.06,0.36,x,0,0,mBlack));
+  const wp=G(I.wp);place(g,wp,B_||C_?0.6:0.55,B_?18.05:(C_?16.35:12.4),0,yg);B(wp,0.9,0.72,0.36,0,0.06,0,mat('wpW',0xD9DAD5,{roughness:0.6}));{const f=new THREE.Mesh(new THREE.CylinderGeometry(0.24,0.24,0.02,24),mat('wpF',0x3A3C3D));f.rotation.x=Math.PI/2;f.position.set(-0.12,0.42,0.18);wp.add(f);}[-0.3,0.3].forEach(x=>B(wp,0.06,0.06,0.36,x,0,0,mBlack));
   // terras
   const ls=sofa(1.8,0.8,0xE6DFD0,[C.olijf,C.roest]);ls.userData.info=I.loungeBuiten;place(g,ls,5.45,14.2,-Math.PI/2,yg);
   [13.6,14.8].forEach(z=>{const a=armchair(0xE6DFD0);a.userData.info=I.loungeBuiten;place(g,a,3.55,z,Math.PI/2,yg);});
@@ -675,7 +710,8 @@ function buildGarden(g){
   // borders
   const r=R(97);const pc=[['bush1',0x5E7A45],['bush2',0x7D9457],['lav',0x8A7BB0],['hort',0xEDE8DE],['salvia',0x5D4E8C],['grass',0xB8B07A]];
   function fillBed(x1,z1,x2,z2,n){for(let i=0;i<n;i++){const q=pc[(r()*pc.length)|0];const x=x1+r()*(x2-x1),z=z1+r()*(z2-z1);if(q[0]==='grass'){const gg=G(I.border);place(g,gg,x,z,0,yg);for(let k=0;k<7;k++){const c=new THREE.Mesh(new THREE.ConeGeometry(0.03,0.6+r()*0.3,4),mat('grassC',0xB8B07A,{roughness:1}));c.position.set((r()-0.5)*0.2,0.35,(r()-0.5)*0.2);c.rotation.z=(r()-0.5)*0.5;c.rotation.x=(r()-0.5)*0.5;gg.add(c);}}else bush(g,x,z,yg,0.14+r()*0.16,q[0],q[1],I.border);}}
-  if(!B_){fillBed(5.1,16.2,5.75,26.3,28);fillBed(0.15,18.5,2.5,21.1,16);fillBed(0.15,24.9,1.9,26.4,8);}else{fillBed(5.1,16.7,5.75,26.3,28);fillBed(0.15,18.6,1.1,24.2,14);fillBed(0.15,24.7,1.35,26.4,5);}fillBed(5.1,12.2,5.75,13.0,3);
+  if(C_){fillBed(5.1,16.2,5.75,26.3,28);fillBed(0.15,16.9,1.1,24.2,16);fillBed(0.15,24.7,1.35,26.4,5);}
+  else if(!B_){fillBed(5.1,16.2,5.75,26.3,28);fillBed(0.15,18.5,2.5,21.1,16);fillBed(0.15,24.9,1.9,26.4,8);}else{fillBed(5.1,16.7,5.75,26.3,28);fillBed(0.15,18.6,1.1,24.2,14);fillBed(0.15,24.7,1.35,26.4,5);}fillBed(5.1,12.2,5.75,13.0,3);
   // voortuin
   floorPoly(g,[[0,-4.0],[5.86,-4.0],[5.86,-0.7],[2.2,-0.7],[2.2,-0.2],[0,-0.2]],texMat('gravel',TX.gravel,{roughness:1}),yg-0.004);
   floorPoly(g,[[0.95,-4.0],[1.95,-4.0],[1.95,-0.2],[0.95,-0.2]],mBrick,yg);
@@ -732,17 +768,19 @@ function applyLight(){
 const LBL_A={bg:[['Entree',1.0,0.9,1],['Hal',1.4,5.4,1],['Toilet',0.37,5.35,1],['Zitkamer',3.9,1.9,1],['Eetkamer',3.85,6.6,1],['Leefkeuken',2.4,11.3,1],['Tuinkamer',1.25,15.6,1],['Terras',4.4,15.6,0.3],['Appelboom',4.35,21.9,3.6],['Voortuin',3.6,-2.4,0.3]],
   '1e':[['Werkkamer',1.0,1.5,1],['Overloop',1.35,4.2,1],['Kinderkamer',3.4,1.0,1],['Master bedroom',3.6,6.6,1],['Badkamer',0.9,7.3,1],['Balkon',0.85,9.3,1]]};
 const LBL_B=[['Entree',1.0,0.9,1],['Hal',1.4,5.4,1],['Toilet',0.37,5.35,1],['Zitkamer',3.9,1.9,1],['Eetkamer',3.85,6.6,1],['Leefkeuken',3.2,11.3,1],['Bijkeuken',1.25,12.9,1],['Tuinkamer',1.25,15.6,1],['Patio',4.3,15.9,0.3],['Appelboom',4.35,21.9,3.6],['Schuur',2.95,25.5,2.7],['Voortuin',3.6,-2.4,0.3]];
-const LBL=()=>floorSel==='bg'?(planSel==='B'?LBL_B:LBL_A.bg):LBL_A['1e'];
+const LBL_C=LBL_A.bg.filter(l=>l[0]!=='Tuinkamer').concat([['Schuur',2.95,25.5,2.7]]);
+const LBL_C1=LBL_A['1e'].map(l=>l[0]==='Werkkamer'?['Wasruimte',l[1],l[2],l[3]]:l);
+const LBL=()=>floorSel==='bg'?(planSel==='B'?LBL_B:planSel==='C'?LBL_C:LBL_A.bg):(planSel==='C'?LBL_C1:LBL_A['1e']);
 const labelsEl=document.getElementById('labels');let labelObjs=[];
 function buildLabels(){labelsEl.innerHTML='';labelObjs=[];LBL().forEach(l=>{const el=document.createElement('div');el.className='lbl';el.textContent=l[0];labelsEl.appendChild(el);const p=P(l[1],l[2]);const base=floorSel==='1e'?FF:0;const hy=l[3]===1?base+(wallMode==='laag'?LOW+0.35:2.2):l[3];labelObjs.push({el:el,v:new THREE.Vector3(p[0],hy,p[1])});});labelsEl.hidden=!showLabels;}
 const tmpV=new THREE.Vector3();
-function updateLabels(){if(!showLabels)return;const w=renderer.domElement.clientWidth,h=renderer.domElement.clientHeight;labelObjs.forEach(o=>{tmpV.copy(o.v).project(camera);if(tmpV.z>1||tmpV.z<-1){o.el.style.display='none';return;}o.el.style.display='';o.el.style.left=((tmpV.x+1)/2*w)+'px';o.el.style.top=((1-tmpV.y)/2*h)+'px';});}
+function updateLabels(){if(!showLabels)return;const w=renderer.domElement.clientWidth,h=renderer.domElement.clientHeight;labelObjs.forEach(o=>{tmpV.copy(o.v).applyMatrix4(camera.matrixWorldInverse);if(tmpV.z>-0.2){o.el.style.display='none';return;}tmpV.copy(o.v).project(camera);if(Math.abs(tmpV.x)>1.2||Math.abs(tmpV.y)>1.2){o.el.style.display='none';return;}o.el.style.display='';o.el.style.left=((tmpV.x+1)/2*w)+'px';o.el.style.top=((1-tmpV.y)/2*h)+'px';});}
 
 /* ================= camera-standpunten ================= */
 const VIEWS_A={bg:[['Overzicht',[10,27,-7],[2.9,0,9.5]],['Straatkant',[10,4.5,-10],[2.9,1.2,0]],['Zitkamer',[5.6,4.6,6.4],[3.7,0.4,1.6]],['Eetkamer',[0.9,5.0,10.2],[4.1,0.4,6.2]],['Keuken',[4.2,5.8,13.4],[2.5,0.5,9.6]],['Tuin',[9.5,8.5,12.5],[2.9,0.3,20.5]]],
   '1e':[['Overzicht',[14,16,-6],[2.9,2.9,5]],['Master',[1.2,7.4,9.6],[4.4,3.2,6.4]],['Kinderkamer',[3.0,7.4,-2.6],[4.0,3.2,2.0]],['Badkamer',[3.8,7.6,10.0],[0.9,3.3,7.2]],['Werkkamer',[3.3,7.0,4.0],[0.9,3.3,0.9]],['Balkon',[7.5,8.5,15.5],[1.0,2.9,9.2]]]};
 const VIEWS_B_EXTRA=[['Tuinkamer',[5.6,5.6,19.8],[1.2,0.4,14.8]],['Schuur',[-2.2,6.2,21.2],[2.9,0.5,25.5]]];
-const VIEWS=new Proxy({},{get:(o,k)=>k==='bg'&&planSel==='B'?VIEWS_A.bg.concat(VIEWS_B_EXTRA):VIEWS_A[k]});
+const VIEWS=new Proxy({},{get:(o,k)=>{if(k==='bg'){if(planSel==='B')return VIEWS_A.bg.concat(VIEWS_B_EXTRA);if(planSel==='C')return VIEWS_A.bg.concat([VIEWS_B_EXTRA[1]]);return VIEWS_A.bg;}if(planSel==='C')return VIEWS_A[k].map(v=>v[0]==='Werkkamer'?['Wasruimte',v[1],v[2]]:v);return VIEWS_A[k];}});
 let tween=null;
 function toV(a){const p=P(a[0],a[2]);return new THREE.Vector3(p[0],a[1],p[1]);}
 function goTo(v,instant){const pos=toV(v[1]),tg=toV(v[2]);if(instant||reduce){camera.position.copy(pos);controls.target.copy(tg);controls.update();return;}tween={t0:performance.now(),dur:1100,p0:camera.position.clone(),t0v:controls.target.clone(),p1:pos,t1:tg};}
@@ -769,8 +807,8 @@ function setHash(){try{history.replaceState(null,'','#plan'+planSel);}catch(e){}
 function setPressed(ids,on){ids.forEach(id=>document.getElementById(id).setAttribute('aria-pressed',id===on));}
 document.getElementById('f-bg').onclick=()=>{floorSel='bg';setPressed(['f-bg','f-1'],'f-bg');hideInfo();applyFloor();goTo(VIEWS.bg[0]);};
 document.getElementById('f-1').onclick=()=>{floorSel='1e';setPressed(['f-bg','f-1'],'f-1');hideInfo();applyFloor();goTo(VIEWS['1e'][0]);};
-document.getElementById('p-a').onclick=()=>{planSel='A';setHash();setPressed(['p-a','p-b'],'p-a');hideInfo();buildAll();};
-document.getElementById('p-b').onclick=()=>{planSel='B';setHash();setPressed(['p-a','p-b'],'p-b');hideInfo();buildAll();};
+const PIDS=['p-a','p-b','p-c'],pid=p=>'p-'+p.toLowerCase();
+PIDS.forEach(id=>document.getElementById(id).onclick=()=>{planSel=id.slice(2).toUpperCase();setHash();setPressed(PIDS,id);hideInfo();buildAll();});
 document.getElementById('w-h').onclick=()=>{wallMode='hoog';setPressed(['w-h','w-l'],'w-h');hideInfo();buildAll();};
 document.getElementById('w-l').onclick=()=>{wallMode='laag';setPressed(['w-h','w-l'],'w-l');hideInfo();buildAll();};
 document.getElementById('l-d').onclick=()=>{evening=false;setPressed(['l-d','l-a'],'l-d');applyLight();};
@@ -784,8 +822,8 @@ if(window.innerWidth<640)setCollapsed(true);
 function resize(){const w=app.clientWidth,h=app.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
 window.addEventListener('resize',resize);resize();
 
-setPressed(['p-a','p-b'],planSel==='A'?'p-a':'p-b');
-window.addEventListener('hashchange',()=>{const n=location.hash==='#planA'?'A':'B';if(n!==planSel){planSel=n;setPressed(['p-a','p-b'],n==='A'?'p-a':'p-b');hideInfo();buildAll();}});
+setPressed(PIDS,pid(planSel));
+window.addEventListener('hashchange',()=>{const n=hashPlan();if(n!==planSel){planSel=n;setPressed(PIDS,pid(n));hideInfo();buildAll();}});
 buildAll();
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 goTo(['',[28,34,-20],[2.9,0,9.5]],true);goTo(VIEWS.bg[0]);

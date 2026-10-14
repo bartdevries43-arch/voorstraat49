@@ -194,6 +194,7 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
     <li><a href="index.html">Alle plannen</a></li>
     <li><a href="3d.html#planA">3D plan A</a></li>
     <li><a href="3d.html#planB">3D plan B</a></li>
+    <li><a href="3d.html#planC">3D plan C</a></li>
     <li><a href="#oordeel">Oordeel</a></li>
     <li><a href="#concept">Stijl</a></li>
     <li><a href="#plattegrond">Plattegrond</a></li>
@@ -372,6 +373,16 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
     </div>
   </article>
 
+  <article class="room" id="planc">
+    <div class="room-id"><h3>Plan C: schuur achterin, wasruimte boven</h3><span class="m2">uitbouw plan A + schuur 2,8 × 1,9 m · <a href="3d.html#planC">bekijk in 3D</a></span></div>
+    <div class="room-body">
+      <div><h4>Bouw</h4><p>De uitbouw van plan A, zonder tuinkamer. De oude schuur naast het terras wordt gesloopt, zodat het terras over de volle breedte loopt en de tuin veel ruimer wordt. Achterin, naast de poort, komt een nieuwe houten schuur voor fietsen en gereedschap. Boven wordt het kamertje van 5 m² aan de voorkant een wasruimte, met water, afvoer en mechanische afzuiging.</p></div>
+      <div><h4>Styling</h4><p>Wasmachine en droger naast elkaar onder een eiken werkblad, een uitstortgootsteen in een olijfgroene kast, kasten erboven en een houten droogrek aan het plafond. Terrazzo vloer en halfhoge salie tegels, net als in de badkamer. De kast op de overloop wordt linnenkast.</p></div>
+      <div><h4>Afweging</h4><p>Je levert de werkkamer in. Een werkplek kan aan de eettafel, in de loungehoek van de uitbouw, of later op zolder met een dakkapel (fase 2). Voordeel: geen extra aanbouw, geen omgevingsvergunning voor de schuur nodig (tot een bepaalde maat vergunningvrij) en de goedkoopste variant met uitbouw.</p></div>
+      <div class="wow"><h4>Wow-moment</h4><p>Vanuit de keuken kijk je over een terras van volle breedte en een open gazon naar de appelboom. Geen schuur meer in je zichtlijn.</p></div>
+    </div>
+  </article>
+
   <article class="room">
     <div class="room-id"><h3>Overloop</h3><span class="m2">ca. 2,0 × 3,5 m · <a href="https://www.funda.nl/detail/koop/vlaardingen/huis-voorstraat-49/44592221/media/foto/40">foto 40</a></span></div>
     <div class="room-body">
@@ -478,6 +489,7 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
           <button id="sc-slim" data-sc="slim" aria-pressed="false">Slim &amp; netjes</button>
           <button id="sc-vt" data-sc="vt" aria-pressed="true">vtwonen-niveau</button>
           <button id="sc-pb" data-sc="pb" aria-pressed="false">Plan B: L-vorm</button>
+          <button id="sc-pc" data-sc="pc" aria-pressed="false">Plan C: schuur achter</button>
           <button id="sc-kzk" data-sc="kzk" aria-pressed="false">KZK-droom</button>
         </div>
       </div>
@@ -662,7 +674,7 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
   drawPlan();
 
   /* ---------- begroting ---------- */
-  const A=['slim','vt','pb','kzk'], VK=['vt','pb','kzk'];
+  const A=['slim','vt','pb','pc','kzk'], VK=['vt','pb','pc','kzk'];
   const items=[
     ['Basis en casco',[
       ['keur','Bouwkundige keuring + funderingsonderzoek',2500,5000,A],
@@ -697,9 +709,10 @@ ul.marks b{font-family:var(--f-display);font-weight:600}
       ['tkam','Schuur ombouwen tot tuinkamer',5000,12000,['kzk']],
       ['dakk','Dakkapel achterzijde + vaste trap (fase 2)',13000,20000,['kzk']],
       ['zij','Plan B: aanbouw op plek van de schuur (bijkeuken + tuinkamer)',40000,60000,['pb']],
-      ['schuurN','Plan B: nieuwe schuur bij de poort',3000,7000,['pb']]]]
+      ['schuurN','Plan B en C: nieuwe schuur bij de poort',3000,7000,['pb','pc']],
+      ['wasr','Plan C: wasruimte boven (leidingen, afvoer, kasten, tegels)',3000,6000,['pc']]]]
   ];
-  const lvlFor={slim:0,vt:1,pb:1,kzk:1};
+  const lvlFor={slim:0,vt:1,pb:1,pc:1,kzk:1};
   let sc='vt', lv=1, on={};
   function applyScenario(s){sc=s;lv=lvlFor[s];on={};items.forEach(g=>g[1].forEach(it=>{on[it[0]]=it[4].includes(s)}));}
   const eur=n=>'€ '+(Math.round(n/100)*100).toLocaleString('nl-NL');
